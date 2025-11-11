@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['handle.inertia'])->group(function () {
@@ -18,5 +19,10 @@ Route::middleware(['handle.inertia'])->group(function () {
 
     Route::group(['middleware' => 'check.auth'], function () {
         Route::get('/', [HomeController::class, 'home'])->name('home');
+        
+        // Todo Routes
+        Route::resource('todos', TodoController::class);
+        Route::post('todos/{todo}/cover', [TodoController::class, 'updateCover'])->name('todos.update-cover');
+        Route::post('todos/{todo}/toggle', [TodoController::class, 'toggleFinish'])->name('todos.toggle');
     });
 });

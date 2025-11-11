@@ -1,7 +1,9 @@
 import React from "react";
 import AppLayout from "@/Layouts/AppLayout";
 import { Button } from "@/components/ui/button";
-import { usePage } from "@inertiajs/react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { usePage, Link } from "@inertiajs/react";
+import { CheckSquare, ListTodo } from "lucide-react";
 
 export default function HomePage() {
     const { auth } = usePage().props;
@@ -20,15 +22,81 @@ export default function HomePage() {
                             />
                             Hai! {auth.name}
                         </h1>
-                        <p className="text-xl text-muted-foreground">
-                            Apa yang ingin kamu pelajari hari ini?
+                        <p className="text-xl text-muted-foreground mb-6">
+                            Kelola aktivitas harian Anda dengan mudah
                         </p>
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white mt-5">
-                            Buat Rencana
+                        <Button
+                            className="bg-blue-600 hover:bg-blue-700 text-white"
+                            asChild
+                        >
+                            <Link href={route("todos.index")}>
+                                <ListTodo className="h-4 w-4" />
+                                Lihat Todos Saya
+                            </Link>
                         </Button>
                     </div>
-                    {/* Technologies Grid */}
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
+
+                    {/* Features Grid */}
+                    <div className="grid md:grid-cols-2 gap-6 mb-8">
+                        <Card className="hover:shadow-lg transition-shadow">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <CheckSquare className="h-5 w-5 text-blue-600" />
+                                    Kelola Todos
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground mb-4">
+                                    Tambah, edit, dan hapus aktivitas yang perlu
+                                    Anda selesaikan
+                                </p>
+                                <Button variant="outline" size="sm" asChild>
+                                    <Link href={route("todos.create")}>
+                                        Tambah Todo Baru
+                                    </Link>
+                                </Button>
+                            </CardContent>
+                        </Card>
+
+                        <Card className="hover:shadow-lg transition-shadow">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <ListTodo className="h-5 w-5 text-green-600" />
+                                    Lihat Statistik
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground mb-4">
+                                    Pantau progres dan statistik todos Anda
+                                </p>
+                                <Button variant="outline" size="sm" asChild>
+                                    <Link href={route("todos.index")}>
+                                        Lihat Dashboard
+                                    </Link>
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </div>
+
+                    {/* Info Section */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Fitur Aplikasi</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <ul className="space-y-2 text-muted-foreground">
+                                <li>✅ Tambah, edit, dan hapus todos</li>
+                                <li>✅ Upload cover untuk setiap todo</li>
+                                <li>
+                                    ✅ Tandai todos sebagai selesai/belum
+                                    selesai
+                                </li>
+                                <li>✅ Cari dan filter todos</li>
+                                <li>✅ Lihat statistik dan grafik progres</li>
+                                <li>✅ Pagination untuk data banyak</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </AppLayout>
