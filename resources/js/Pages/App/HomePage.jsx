@@ -29,7 +29,7 @@ export default function HomePage() {
                             className="bg-blue-600 hover:bg-blue-700 text-white"
                             asChild
                         >
-                            <Link href={route("todos.index")}>
+                            <Link href="/todos">
                                 <ListTodo className="h-4 w-4" />
                                 Lihat Todos Saya
                             </Link>
@@ -51,7 +51,7 @@ export default function HomePage() {
                                     Anda selesaikan
                                 </p>
                                 <Button variant="outline" size="sm" asChild>
-                                    <Link href={route("todos.create")}>
+                                    <Link href="/todos/create">
                                         Tambah Todo Baru
                                     </Link>
                                 </Button>
@@ -70,9 +70,7 @@ export default function HomePage() {
                                     Pantau progres dan statistik todos Anda
                                 </p>
                                 <Button variant="outline" size="sm" asChild>
-                                    <Link href={route("todos.index")}>
-                                        Lihat Dashboard
-                                    </Link>
+                                    <Link href="/todos">Lihat Dashboard</Link>
                                 </Button>
                             </CardContent>
                         </Card>

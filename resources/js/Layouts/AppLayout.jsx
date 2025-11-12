@@ -20,14 +20,14 @@ export default function AppLayout({ children }) {
                             </Link>
                             <div className="hidden md:flex items-center space-x-4">
                                 <Link
-                                    href={route("home")}
+                                    href="/"
                                     className="flex items-center gap-2 text-sm hover:text-primary transition-colors"
                                 >
                                     <Home className="h-4 w-4" />
                                     Home
                                 </Link>
                                 <Link
-                                    href={route("todos.index")}
+                                    href="/todos"
                                     className="flex items-center gap-2 text-sm hover:text-primary transition-colors"
                                 >
                                     <ListTodo className="h-4 w-4" />

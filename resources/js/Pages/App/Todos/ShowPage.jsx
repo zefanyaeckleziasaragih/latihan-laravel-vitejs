@@ -1,7 +1,7 @@
 import React from "react";
 import AppLayout from "@/Layouts/AppLayout";
 import { Link, usePage, router } from "@inertiajs/react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Edit, Trash2, CheckCircle2, Circle } from "lucide-react";
 import { showConfirm } from "@/lib/sweetalert";
@@ -14,12 +14,12 @@ export default function ShowPage() {
             "Todo ini akan dihapus secara permanen!"
         );
         if (confirmed) {
-            router.delete(route("todos.destroy", todo.id));
+            router.delete(`/todos/${todo.id}`);
         }
     };
 
     const handleToggle = () => {
-        router.post(route("todos.toggle", todo.id));
+        router.post(`/todos/${todo.id}/toggle`);
     };
 
     return (
@@ -29,7 +29,7 @@ export default function ShowPage() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <Button variant="outline" size="icon" asChild>
-                                <Link href={route("todos.index")}>
+                                <Link href="/todos">
                                     <ArrowLeft className="h-4 w-4" />
                                 </Link>
                             </Button>
@@ -37,7 +37,7 @@ export default function ShowPage() {
                         </div>
                         <div className="flex gap-2">
                             <Button variant="outline" asChild>
-                                <Link href={route("todos.edit", todo.id)}>
+                                <Link href={`/todos/${todo.id}/edit`}>
                                     <Edit className="h-4 w-4" />
                                     Edit
                                 </Link>

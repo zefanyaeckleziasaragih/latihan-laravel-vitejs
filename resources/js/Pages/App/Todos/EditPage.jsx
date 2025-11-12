@@ -23,7 +23,7 @@ export default function EditPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("todos.update", todo.id));
+        post(`/todos/${todo.id}`);
     };
 
     const handleCoverChange = (e) => {
@@ -45,7 +45,7 @@ export default function EditPage() {
                 <div className="max-w-2xl mx-auto space-y-6">
                     <div className="flex items-center gap-4">
                         <Button variant="outline" size="icon" asChild>
-                            <Link href={route("todos.index")}>
+                            <Link href="/todos">
                                 <ArrowLeft className="h-4 w-4" />
                             </Link>
                         </Button>
@@ -163,9 +163,7 @@ export default function EditPage() {
                                             variant="outline"
                                             asChild
                                         >
-                                            <Link href={route("todos.index")}>
-                                                Batal
-                                            </Link>
+                                            <Link href="/todos">Batal</Link>
                                         </Button>
                                     </div>
                                 </FieldGroup>
