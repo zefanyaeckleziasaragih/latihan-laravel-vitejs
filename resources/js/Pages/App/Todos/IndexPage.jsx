@@ -7,7 +7,15 @@ import { Input } from "@/components/ui/input";
 import Pagination from "@/components/ui/pagination";
 import { showSuccess, showError, showConfirm } from "@/lib/sweetalert";
 import Chart from "react-apexcharts";
-import { Search, Plus, Edit, Trash2, CheckCircle2, Circle } from "lucide-react";
+import {
+    Search,
+    Plus,
+    Edit,
+    Trash2,
+    CheckCircle2,
+    Circle,
+    Filter,
+} from "lucide-react";
 
 export default function IndexPage() {
     const { todos, stats, filters, flash } = usePage().props;
@@ -213,11 +221,15 @@ export default function IndexPage() {
                                                     <Circle className="h-6 w-6 text-gray-400" />
                                                 )}
                                             </button>
-                                            {todo.cover && (
+                                            {todo.cover_url && (
                                                 <img
-                                                    src={`/storage/${todo.cover}`}
+                                                    src={todo.cover_url}
                                                     alt={todo.title}
                                                     className="w-24 h-24 object-cover rounded-md"
+                                                    onError={(e) => {
+                                                        e.target.style.display =
+                                                            "none";
+                                                    }}
                                                 />
                                             )}
                                             <div className="flex-1">

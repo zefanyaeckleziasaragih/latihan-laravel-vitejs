@@ -1,7 +1,7 @@
 import React from "react";
 import AppLayout from "@/Layouts/AppLayout";
 import { Link, usePage, router } from "@inertiajs/react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Edit, Trash2, CheckCircle2, Circle } from "lucide-react";
 import { showConfirm } from "@/lib/sweetalert";
@@ -98,15 +98,22 @@ export default function ShowPage() {
                             </div>
 
                             {/* Cover */}
-                            {todo.cover && (
+                            {todo.cover_url && (
                                 <div>
                                     <p className="text-sm text-muted-foreground mb-2">
                                         Cover
                                     </p>
                                     <img
-                                        src={`/storage/${todo.cover}`}
+                                        src={todo.cover_url}
                                         alt={todo.title}
-                                        className="max-w-full h-auto rounded-lg"
+                                        className="max-w-full h-auto rounded-lg shadow-md"
+                                        onError={(e) => {
+                                            e.target.style.display = "none";
+                                            console.error(
+                                                "Error loading image:",
+                                                todo.cover_url
+                                            );
+                                        }}
                                     />
                                 </div>
                             )}

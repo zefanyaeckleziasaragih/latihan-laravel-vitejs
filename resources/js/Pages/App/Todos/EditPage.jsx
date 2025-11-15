@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldLabel, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 
 export default function EditPage() {
     const { todo } = usePage().props;
@@ -17,13 +17,14 @@ export default function EditPage() {
         _method: "PUT",
     });
 
-    const [preview, setPreview] = useState(
-        todo.cover ? `/storage/${todo.cover}` : null
-    );
+    const [preview, setPreview] = useState(todo.cover_url || null);
+    const [removeExisting, setRemoveExisting] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(`/todos/${todo.id}`);
+        post(`/todos/${todo.id}`, {
+            forceFormData: true,
+        });
     };
 
     const handleCoverChange = (e) => {
@@ -34,9 +35,19 @@ export default function EditPage() {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(reader.result);
+                setRemoveExisting(false);
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const handleRemovePreview = () => {
+        setPreview(null);
+        setData("cover", null);
+        setRemoveExisting(true);
+        // Reset file input
+        const fileInput = document.getElementById("cover");
+        if (fileInput) fileInput.value = "";
     };
 
     return (
@@ -138,15 +149,61 @@ export default function EditPage() {
                                                 {errors.cover}
                                             </div>
                                         )}
-                                        {preview && (
-                                            <div className="mt-4">
+                                        {preview && !removeExisting && (
+                                            <div className="mt-4 relative inline-block">
                                                 <img
                                                     src={preview}
                                                     alt="Preview"
                                                     className="max-w-full h-48 object-cover rounded-md"
+                                                    onError={(e) => {
+                                                        console.error(
+                                                            "Error loading image:",
+                                                            preview
+                                                        );
+                                                    }}
                                                 />
+                                                <button
+                                                    type="button"
+                                                    onClick={
+                                                        handleRemovePreview
+                                                    }
+                                                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                                                >
+                                                    <X className="h-4 w-4" />
+                                                </button>
+                                                <p className="text-xs text-muted-foreground mt-2">
+                                                    {todo.cover_url &&
+                                                    !data.cover
+                                                        ? "Cover saat ini"
+                                                        : "Preview cover baru"}
+                                                </p>
                                             </div>
                                         )}
+                                        {!preview &&
+                                            todo.cover_url &&
+                                            !removeExisting && (
+                                                <div className="mt-4">
+                                                    <p className="text-sm text-muted-foreground mb-2">
+                                                        Cover saat ini:
+                                                    </p>
+                                                    <div className="relative inline-block">
+                                                        <img
+                                                            src={todo.cover_url}
+                                                            alt="Current cover"
+                                                            className="max-w-full h-48 object-cover rounded-md"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={
+                                                                handleRemovePreview
+                                                            }
+                                                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                                                        >
+                                                            <X className="h-4 w-4" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
                                     </Field>
 
                                     <div className="flex gap-2">

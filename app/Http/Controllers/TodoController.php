@@ -26,6 +26,14 @@ class TodoController extends Controller
             ->paginate(20)
             ->withQueryString();
 
+        // Tambahkan URL cover untuk setiap todo
+        $todos->getCollection()->transform(function ($todo) {
+            if ($todo->cover) {
+                $todo->cover_url = asset('storage/' . $todo->cover);
+            }
+            return $todo;
+        });
+
         // Statistik
         $stats = [
             'total' => Todo::where('user_id', Auth::id())->count(),
@@ -78,6 +86,11 @@ class TodoController extends Controller
             abort(403);
         }
 
+        // Tambahkan URL cover
+        if ($todo->cover) {
+            $todo->cover_url = asset('storage/' . $todo->cover);
+        }
+
         return Inertia::render('App/Todos/ShowPage', [
             'todo' => $todo,
         ]);
@@ -87,6 +100,11 @@ class TodoController extends Controller
     {
         if ($todo->user_id !== Auth::id()) {
             abort(403);
+        }
+
+        // Tambahkan URL cover
+        if ($todo->cover) {
+            $todo->cover_url = asset('storage/' . $todo->cover);
         }
 
         return Inertia::render('App/Todos/EditPage', [
@@ -109,11 +127,11 @@ class TodoController extends Controller
 
         $todo->title = $validated['title'];
         $todo->description = $validated['description'] ?? null;
-        $todo->is_finished = $validated['is_finished'] ?? false;
+        $todo->is_finished = $request->boolean('is_finished');
 
         if ($request->hasFile('cover')) {
             // Hapus cover lama jika ada
-            if ($todo->cover) {
+            if ($todo->cover && Storage::disk('public')->exists($todo->cover)) {
                 Storage::disk('public')->delete($todo->cover);
             }
             $path = $request->file('cover')->store('todos', 'public');
@@ -132,7 +150,7 @@ class TodoController extends Controller
         }
 
         // Hapus cover jika ada
-        if ($todo->cover) {
+        if ($todo->cover && Storage::disk('public')->exists($todo->cover)) {
             Storage::disk('public')->delete($todo->cover);
         }
 
@@ -152,7 +170,7 @@ class TodoController extends Controller
         ]);
 
         // Hapus cover lama jika ada
-        if ($todo->cover) {
+        if ($todo->cover && Storage::disk('public')->exists($todo->cover)) {
             Storage::disk('public')->delete($todo->cover);
         }
 
