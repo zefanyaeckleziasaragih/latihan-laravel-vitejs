@@ -1,5 +1,5 @@
 import React from "react";
-import AuthLayout from "@/Layouts/AuthLayout";
+import AuthLayout from "@/layouts/AuthLayout";
 import {
     Card,
     CardContent,

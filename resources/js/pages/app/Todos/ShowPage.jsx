@@ -1,5 +1,5 @@
 import React from "react";
-import AppLayout from "@/Layouts/AppLayout";
+import AppLayout from "@/layouts/AppLayout";
 import { Link, usePage, router } from "@inertiajs/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

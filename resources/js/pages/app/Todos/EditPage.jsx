@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AppLayout from "@/Layouts/AppLayout";
+import AppLayout from "@/layouts/AppLayout";
 import { useForm, Link, usePage } from "@inertiajs/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldLabel, FieldGroup } from "@/components/ui/field";
