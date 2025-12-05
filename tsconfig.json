@@ -6,7 +6,7 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["./resources/js/*"],
-            "@/components/*": ["./resources/js/Components/*"],
+            "@/components/*": ["./resources/js/components/*"],
             "@/lib/*": ["./resources/js/lib/*"]
         },
         "lib": ["dom", "dom.iterable", "esnext"],
