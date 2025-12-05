@@ -24,7 +24,7 @@ class AuthController extends Controller
         $data = [
             'success' => $success,
         ];
-        return Inertia::render('Auth/LoginPage', $data);
+        return Inertia::render('auth/LoginPage', $data);
     }
 
     public function postLogin(Request $request)
@@ -54,7 +54,7 @@ class AuthController extends Controller
         }
 
         $data = [];
-        return Inertia::render('Auth/RegisterPage', $data);
+        return Inertia::render('auth/RegisterPage', $data);
     }
 
     public function postRegister(Request $request)

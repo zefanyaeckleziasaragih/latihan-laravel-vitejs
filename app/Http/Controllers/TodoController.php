@@ -41,7 +41,7 @@ class TodoController extends Controller
             'unfinished' => Todo::where('user_id', Auth::id())->where('is_finished', false)->count(),
         ];
 
-        return Inertia::render('App/Todos/IndexPage', [
+        return Inertia::render('app/todos/IndexPage', [
             'todos' => $todos,
             'stats' => $stats,
             'filters' => [
@@ -53,7 +53,7 @@ class TodoController extends Controller
 
     public function create()
     {
-        return Inertia::render('App/Todos/CreatePage');
+        return Inertia::render('app/todos/CreatePage');
     }
 
     public function store(Request $request)
@@ -91,7 +91,7 @@ class TodoController extends Controller
             $todo->cover_url = asset('storage/' . $todo->cover);
         }
 
-        return Inertia::render('App/Todos/ShowPage', [
+        return Inertia::render('app/todos/ShowPage', [
             'todo' => $todo,
         ]);
     }
@@ -107,7 +107,7 @@ class TodoController extends Controller
             $todo->cover_url = asset('storage/' . $todo->cover);
         }
 
-        return Inertia::render('App/Todos/EditPage', [
+        return Inertia::render('app/todos/EditPage', [
             'todo' => $todo,
         ]);
     }

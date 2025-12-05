@@ -13,6 +13,6 @@ class HomeController extends Controller
         $data = [
             'auth' => $auth,
         ];
-        return Inertia::render('App/HomePage', $data);
+        return Inertia::render('app/HomePage', $data);
     }
 }
